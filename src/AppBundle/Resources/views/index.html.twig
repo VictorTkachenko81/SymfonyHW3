@@ -1,0 +1,22 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="page-header">Final tournament - Group stage</h1>
+
+    <div class="row">
+        <ul class="clubList">
+            {% for team in teams %}
+                <li><a class="imgLink" href="{{ url('team', {'teamName': team['key']}) }}" title="{{ team['title'] }}">
+                        <img height="50" width="50" alt="{{ team['name'] }}" title="{{ team['name'] }}"
+                             src="/images/{{ team['key'] }}.png">
+                    </a>
+                    <br> {{ team['title'] }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <hr>
+
+{% endblock %}

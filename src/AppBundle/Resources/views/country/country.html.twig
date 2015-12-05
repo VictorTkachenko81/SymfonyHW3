@@ -1,0 +1,29 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-7 col-md-push-5">
+
+            <h2 class="featurette-heading">
+                <img class="imgLink" height="50" width="50" alt="{{ country.Name }}" title="{{ country.Name }}"
+                     src="/images/{{ country.Key }}.png">
+                {{ country.Name }}
+            </h2>
+
+            <p class="lead">
+                <br>
+                {{ country.Description }}
+            </p>
+        </div>
+        <div class="col-md-5 col-md-pull-7">
+            <img class="featurette-image img-responsive center-block"
+                 data-src="holder.js/400x400/auto" alt="{{ country.Name }}"
+                 title="{{ country.Name }} {{ country.Name }}"
+                 src="{{ country.Photo }}" data-holder-rendered="true">
+        </div>
+    </div>
+
+    <hr>
+
+{% endblock %}
