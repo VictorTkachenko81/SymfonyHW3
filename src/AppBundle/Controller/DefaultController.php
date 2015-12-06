@@ -21,9 +21,17 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $teams = new TeamModel();
+        $teams = $this->getDoctrine()
+            ->getRepository('AppBundle:Team')
+            ->findAll();
 
-        return ['teams' => $teams->getAllTeam()];
+        if (!$teams) {
+            throw $this->createNotFoundException(
+                'No teams found'
+            );
+        }
+
+        return ['teams' => $teams];
     }
 
     /**
@@ -38,14 +46,16 @@ class DefaultController extends Controller
      */
     public function teamAction($teamName)
     {
-        $team = new TeamModel($teamName);
+        $team = $this->getDoctrine()
+            ->getRepository('AppBundle:Team')
+            ->findOneByCode($teamName);
 
         return ['team' => $team];
     }
 
     /**
-     * @param $country
-     * @Route("/country/{country}", name="country", requirements={
+     * @param $countryCode
+     * @Route("/country/{countryCode}", name="country", requirements={
      *     "country": "[A-Za-z]+"
      *     })
      * @Method("GET")
@@ -53,33 +63,34 @@ class DefaultController extends Controller
      *
      * @return Response
      */
-    public function countryAction($country)
+    public function countryAction($countryCode)
     {
-        $country = new CountryModel($country);
+        $country = $this->getDoctrine()
+            ->getRepository('AppBundle:Country')
+            ->findOneByCode($countryCode);
 
         return ['country' => $country];
     }
 
     /**
      * @param $team
-     * @param $player
-     * @Route("/team/{team}/player/{player}", name="player", requirements={
+     * @param $playerId
+     * @Route("/team/{team}/player/{playerId}", name="player", requirements={
      *     "team": "Albania|Austria|Belgium|Croatia|CzechRepublic|England|France|Germany|Hungary|Iceland|Italy|NorthernIreland|Poland|Portugal|RepublicOfIreland|Romania|Russia|Slovakia|Spain|Sweden|Switzerland|Turkey|Ukraine|Wales",
-     *     "player": "[A-Za-z]+"
+     *     "playerId": "\d+"
      *     })
      * @Method("GET")
      * @Template("AppBundle:player:player.html.twig")
      *
      * @return Response
      */
-    public function playerAction($team, $player)
+    public function playerAction($team, $playerId)
     {
-        $player = new PlayerModel($player);
+        $player = $this->getDoctrine()
+            ->getRepository('AppBundle:Player')
+            ->find($playerId);
 
-        return [
-            'team'      => $team,
-            'player'    => $player,
-        ];
+        return ['player' => $player];
     }
 
 }
