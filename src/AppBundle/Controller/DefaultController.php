@@ -21,9 +21,17 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $teams = new TeamModel();
+        $teams = $this->getDoctrine()
+            ->getRepository('AppBundle:Team')
+            ->findAll();
 
-        return ['teams' => $teams->getAllTeam()];
+        if (!$teams) {
+            throw $this->createNotFoundException(
+                'No teams found'
+            );
+        }
+
+        return ['teams' => $teams];
     }
 
     /**

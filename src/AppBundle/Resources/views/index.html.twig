@@ -7,11 +7,11 @@
     <div class="row">
         <ul class="clubList">
             {% for team in teams %}
-                <li><a class="imgLink" href="{{ url('team', {'teamName': team['key']}) }}" title="{{ team['title'] }}">
-                        <img height="50" width="50" alt="{{ team['name'] }}" title="{{ team['name'] }}"
-                             src="/images/{{ team['key'] }}.png">
+                <li><a class="imgLink" href="{{ url('team', {'teamName': team.code}) }}" title="{{ team.country }}">
+                        <img height="50" width="50" alt="{{ team.name }}" title="{{ team.name }}"
+                             src="{{ team.logo }}">
                     </a>
-                    <br> {{ team['title'] }}
+                    <br> {{ team.country }}
                 </li>
             {% endfor %}
         </ul>
