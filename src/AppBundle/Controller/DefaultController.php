@@ -54,8 +54,8 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param $country
-     * @Route("/country/{country}", name="country", requirements={
+     * @param $countryCode
+     * @Route("/country/{countryCode}", name="country", requirements={
      *     "country": "[A-Za-z]+"
      *     })
      * @Method("GET")
@@ -63,9 +63,11 @@ class DefaultController extends Controller
      *
      * @return Response
      */
-    public function countryAction($country)
+    public function countryAction($countryCode)
     {
-        $country = new CountryModel($country);
+        $country = $this->getDoctrine()
+            ->getRepository('AppBundle:Country')
+            ->findOneByCode($countryCode);
 
         return ['country' => $country];
     }
@@ -84,19 +86,11 @@ class DefaultController extends Controller
      */
     public function playerAction($team, $playerId)
     {
-//        $player = new PlayerModel($player);
-//
-//        return [
-//            'team'      => $team,
-//            'player'    => $player,
-//        ];
-
         $player = $this->getDoctrine()
             ->getRepository('AppBundle:Player')
             ->find($playerId);
 
         return ['player' => $player];
-
     }
 
 }

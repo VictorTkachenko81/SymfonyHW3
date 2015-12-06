@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <a class="imgLink" href="{{ url('country', {'country': team.name}) }}" title="{{ team.name }}">
+    <a class="imgLink" href="{{ url('country', {'countryCode': team.name}) }}" title="{{ team.name }}">
         <img height="50" width="50" alt="{{ team.name }}" title="{{ team.name }}"
              src="/images/{{ team.name }}.png">
     </a>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Country;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Team;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -110,19 +111,14 @@ class TestDataController extends Controller
         );
 
 
-
     /**
      * @Route("/test_data_add", name="testDataAdd")
-     * @Template("AppBundle::index.html.twig")
      *
      * @return Response
      */
     public function createAction()
     {
-
         $faker = \Faker\Factory::create();
-
-        $ids = '';
 
         foreach ($this->dataCountry as $key => $dataCollection) {
 
@@ -131,11 +127,19 @@ class TestDataController extends Controller
             $team = new Team();
             $team->setCode($key);
             $team->setName($dataCollection['name']);
-            $team->setCountry($dataCollection['title']);
             $team->setLogo('/images/' . $key . '.png');
             $team->setDescription($faker->text($maxNbChars = 300));
 
+            $country = new Country();
+            $country->setName($dataCollection['name']);
+            $country->setCode($key);
+            $country->setPhoto($faker->imageUrl($width = 400, $height = 400, 'city'));
+            $country->setDescription($faker->text($maxNbChars = 400));
+
+            $team->setCountry($country);
+
             $em->persist($team);
+            $em->persist($country);
 
             for ($i = 0; $i <= 5; $i++) {
                 $player = new Player();
@@ -156,9 +160,8 @@ class TestDataController extends Controller
 
             $em->flush();
 
-            $ids .= ', ' . $team->getId();
         }
 
-        return new Response('Created team id ' . $ids);
+        return $this->redirectToRoute('homepage');
     }
 }

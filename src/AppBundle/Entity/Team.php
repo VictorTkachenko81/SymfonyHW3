@@ -44,9 +44,7 @@ class Team
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=50)
+     * @ORM\OneToOne(targetEntity="Country")
      */
     private $country;
 
@@ -152,30 +150,6 @@ class Team
     }
 
     /**
-     * Set country
-     *
-     * @param string $country
-     *
-     * @return Team
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
      * Set logo
      *
      * @param string $logo
@@ -231,5 +205,29 @@ class Team
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \AppBundle\Entity\Country $country
+     *
+     * @return Team
+     */
+    public function setCountry(\AppBundle\Entity\Country $country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \AppBundle\Entity\Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }
