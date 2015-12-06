@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Team
@@ -55,6 +56,17 @@ class Team
      * @ORM\Column(name="logo", type="string", length=255)
      */
     private $logo;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Player", mappedBy="team")
+     */
+    protected $players;
+
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
 
 
     /**
@@ -185,5 +197,39 @@ class Team
     public function getLogo()
     {
         return $this->logo;
+    }
+
+    /**
+     * Add player
+     *
+     * @param \AppBundle\Entity\Player $player
+     *
+     * @return Team
+     */
+    public function addPlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players[] = $player;
+
+        return $this;
+    }
+
+    /**
+     * Remove player
+     *
+     * @param \AppBundle\Entity\Player $player
+     */
+    public function removePlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players->removeElement($player);
+    }
+
+    /**
+     * Get players
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 }

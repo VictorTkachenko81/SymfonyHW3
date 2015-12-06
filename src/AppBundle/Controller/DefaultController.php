@@ -46,7 +46,14 @@ class DefaultController extends Controller
      */
     public function teamAction($teamName)
     {
-        $team = new TeamModel($teamName);
+//        $team = new TeamModel($teamName);
+
+        $team = $this->getDoctrine()
+            ->getRepository('AppBundle:Team')
+            ->findOneByCode($teamName);
+
+//        $categoryName = $product->getCategory()->getName();
+
 
         return ['team' => $team];
     }

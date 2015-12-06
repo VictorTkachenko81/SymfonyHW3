@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Team;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -124,6 +125,9 @@ class TestDataController extends Controller
         $ids = '';
 
         foreach ($this->dataCountry as $key => $dataCollection) {
+
+            $em = $this->getDoctrine()->getManager();
+
             $team = new Team();
             $team->setCode($key);
             $team->setName($dataCollection['name']);
@@ -131,9 +135,25 @@ class TestDataController extends Controller
             $team->setLogo('/images/' . $key . '.png');
             $team->setDescription($faker->text($maxNbChars = 300));
 
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($team);
+
+            for ($i = 0; $i <= 5; $i++) {
+                $player = new Player();
+                $player->setFirstName($faker->firstNameMale);
+                $player->setLastName($faker->lastName);
+                $player->setPosition($faker->word);
+                $player->setStatistic($faker->randomDigit);
+                $player->setAge($faker->dateTimeBetween(
+                    $startDate = '-35 years',
+                    $endDate = '-20 years'
+                ));
+                $player->setBiography($faker->realText($maxNbChars = 200, $indexSize = 2));
+                $player->setPhoto($faker->imageUrl($width = 400, $height = 400, 'people'));
+                $player->setTeam($team);
+
+                $em->persist($player);
+            }
+
             $em->flush();
 
             $ids .= ', ' . $team->getId();
