@@ -27,7 +27,7 @@
             <tbody>
             {% for squad in team.players %}
                 <tr>
-                    <td><a href="{{ url('player', {'team': team.name, 'player': squad.LastName}) }}">
+                    <td><a href="{{ url('player', {'team': team.name, 'playerId': squad.id}) }}">
                             {{ squad.FirstName }} {{ squad.LastName }}
                         </a>
                     </td>

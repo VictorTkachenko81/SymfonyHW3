@@ -5,15 +5,15 @@
 <div class="row">
    <div class="col-md-7 col-md-push-5">
        <h1>
-           <a class="imgLink" href="{{ url('country', {'country': team}) }}" title="{{ team }}">
-               <img height="50" width="50" alt="{{ team }}" title="{{ team }}"
-                    src="/images/{{ team }}.png">
+           <a class="imgLink" href="{{ url('country', {'country': player.team.code}) }}" title="{{ player.team.name }}">
+               <img height="50" width="50" alt="{{ player.team.name }}" title="{{ player.team.name }}"
+                    src="{{ player.team.logo }}">
            </a>
-           {{ team }}
+           {{ player.team.name }}
        </h1>
 
        <h2 class="featurette-heading">{{ player.FirstName }} {{ player.LastName }}
-           <span class="text-muted">({{ player.Age }})</span>
+           <span class="text-muted">({{ player.Age|date("m.d.Y") }})</span>
        </h2>
        <p class="lead">
            <br>

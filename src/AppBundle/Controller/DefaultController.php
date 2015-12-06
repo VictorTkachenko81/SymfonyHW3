@@ -46,14 +46,9 @@ class DefaultController extends Controller
      */
     public function teamAction($teamName)
     {
-//        $team = new TeamModel($teamName);
-
         $team = $this->getDoctrine()
             ->getRepository('AppBundle:Team')
             ->findOneByCode($teamName);
-
-//        $categoryName = $product->getCategory()->getName();
-
 
         return ['team' => $team];
     }
@@ -77,24 +72,31 @@ class DefaultController extends Controller
 
     /**
      * @param $team
-     * @param $player
-     * @Route("/team/{team}/player/{player}", name="player", requirements={
+     * @param $playerId
+     * @Route("/team/{team}/player/{playerId}", name="player", requirements={
      *     "team": "Albania|Austria|Belgium|Croatia|CzechRepublic|England|France|Germany|Hungary|Iceland|Italy|NorthernIreland|Poland|Portugal|RepublicOfIreland|Romania|Russia|Slovakia|Spain|Sweden|Switzerland|Turkey|Ukraine|Wales",
-     *     "player": "[A-Za-z]+"
+     *     "playerId": "\d+"
      *     })
      * @Method("GET")
      * @Template("AppBundle:player:player.html.twig")
      *
      * @return Response
      */
-    public function playerAction($team, $player)
+    public function playerAction($team, $playerId)
     {
-        $player = new PlayerModel($player);
+//        $player = new PlayerModel($player);
+//
+//        return [
+//            'team'      => $team,
+//            'player'    => $player,
+//        ];
 
-        return [
-            'team'      => $team,
-            'player'    => $player,
-        ];
+        $player = $this->getDoctrine()
+            ->getRepository('AppBundle:Player')
+            ->find($playerId);
+
+        return ['player' => $player];
+
     }
 
 }
