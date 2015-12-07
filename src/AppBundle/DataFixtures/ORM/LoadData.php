@@ -28,19 +28,6 @@ class LoadData implements FixtureInterface
 
     public function load(ObjectManager $manager)
     {
-//        $faker = \Faker\Factory::create();
-//        $x = 0;
-//        while ($x++ < 25) {
-//            $country = $this->getReference("country-{$x}");
-//
-//            $team = new Team();
-//            $team->setDescription($faker->text);
-//            $team->setCountry($country);
-//            $manager->persist($team);
-//            $manager->flush();
-//            $this->addReference("team-{$x}", $team);
-//        }
-
 
         $faker = \Faker\Factory::create();
 
